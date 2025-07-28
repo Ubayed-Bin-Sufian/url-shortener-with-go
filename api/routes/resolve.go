@@ -4,7 +4,7 @@
 package routes
 
 import (
-	"github.com/ubayed-bin-sufian/shorten-url-fiber-redis/database"
+	"github.com/Ubayed-Bin-Sufian/url-shortener-with-go/api/database"
 	"github.com/gofiber/fiber/v2"
 	"github.com/go-redis/redis/v8"
 )
@@ -22,7 +22,7 @@ func ResolveURL(c *fiber.Ctx) error {
 			"error": "short URL not found in the database",
 		})
 	} else if err != nil {
-		return c.Status(fiber.StatusInternalError).JSON(fiber.Map{
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "error retrieving short URL from the database",
 		})
 	}
