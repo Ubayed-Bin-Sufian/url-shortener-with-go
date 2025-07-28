@@ -23,24 +23,24 @@ The service uses:
 
 ``` mermaid
 graph TB
-    subgraph Docker Environment
+    subgraph "Docker Environment"
         subgraph "API Service :3000"
-            A[Go Fiber Server] --> B[URL Shortener Logic]
-            B --> C[Rate Limiter]
+            A["Go Fiber Server"] --> B["URL Shortener Logic"]
+            B --> C["Rate Limiter"]
         end
         
         subgraph "Redis DB :6379"
-            D[(DB 0<br>URL Mappings)] 
-            E[(DB 1<br>Rate Limits)]
+            D[("DB 0<br/>URL Mappings")] 
+            E[("DB 1<br/>Rate Limits")]
         end
         
-        B --> |Store/Retrieve URLs| D
-        C --> |Check/Update Limits| E
+        B --> |"Store/Retrieve URLs"| D
+        C --> |"Check/Update Limits"| E
     end
     
-    User -->|1. POST /api/v1<br>Long URL| A
-    User -->|2. GET /:shortcode| A
-    A -->|3. Redirect to<br>Original URL| User
+    User --> |"POST /api/v1<br/>Long URL"| A
+    User --> |"GET /:shortcode"| A
+    A --> |"Redirect to<br/>Original URL"| User
 
     style A fill:#9ff,stroke:#333
     style D fill:#f96,stroke:#333
