@@ -11,13 +11,23 @@ A lightning-fast, production-ready URL shortener service built with Go and Redis
 - **Rate Limiting**: Built-in protection against abuse
 - **Redis Backend**: High-performance data storage
 
+## Architecture
+
+The service uses:
+- Go Fiber for the HTTP server
+- Redis for storing URL mappings and rate limiting
+- Docker for containerization
+- Two Redis databases:
+  - DB 0: URL mappings
+  - DB 1: Rate limiting data
+
 ## Quick Start
 
 ### Prerequisites
 
-- Go 1.19 or higher
+- Go 1.24.4 or higher
 - Redis 6.x or higher
-- Docker
+- Docker and Docker Compose
 
 ### Installation
 
@@ -30,6 +40,17 @@ cd url-shortener-with-go
 2. Install dependencies
 ```bash
 go mod download
+```
+
+### Environment Variables
+
+Create a `.env` file in the `api` directory with these variables:
+```env
+DB_ADDR="db:6379"    # Redis address
+DB_PASS=""           # Redis password
+APP_PORT=":3000"     # Application port
+DOMAIN="localhost:3000"  # Your domain
+API_QUOTA=10         # Rate limit per IP
 ```
 
 ### Docker Setup
@@ -48,6 +69,18 @@ curl -i -X POST -H "Content-Type: application/json" -d '{
     "expiry": 24
 }' http://localhost:3000/api/v1
 ```
+
+Example Response:
+```json
+{
+    "url": "https://github.com",
+    "short": "localhost:3000/abc123",
+    "expiry": 24,
+    "rate-limit": 9,
+    "rate-limit-reset": 30
+}
+```
+
 Access the shortened URL:
 
 ```bash
@@ -56,7 +89,6 @@ curl -i http://localhost:3000/your-short-code
 
 ### Use custom short URL
 
-**Example**
 ```bash
 curl -i -X POST -H "Content-Type: application/json" -d '{
     "url": "https://github.com",
