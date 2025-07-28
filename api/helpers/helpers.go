@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func EnforceSSL () string {
+func EnforceSSL(url string) string {
 	if url[:4] != "http" {
 		return "https://" + url
   	}
