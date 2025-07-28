@@ -1,3 +1,3 @@
-module gh/ubayed/shorten-url-fiber-redis
+module github.com/Ubayed-Bin-Sufian/url-shortener-with-go
 
 go 1.24.4
