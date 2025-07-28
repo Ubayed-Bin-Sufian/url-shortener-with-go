@@ -79,7 +79,7 @@ func ShortenURL(c *fiber.Ctx) error {
 	var id string
 
 	if body.CustomShort == "" {
-		id = uuid.New().string()[:6]
+		id = uuid.New().String()[:6]
 	} else {
 		id = body.CustomShort
 	}

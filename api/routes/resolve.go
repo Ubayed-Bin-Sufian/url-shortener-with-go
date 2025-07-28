@@ -13,7 +13,7 @@ func ResolveURL(c *fiber.Ctx) error {
 
 	url := c.Params("url")
 
-	r := database.CreateClient()
+	r := database.CreateClient(0)
 	defer r.Close()
 
 	value, err := r.Get(database.Ctx, url).Result()
