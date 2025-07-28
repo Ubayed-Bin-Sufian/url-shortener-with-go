@@ -21,6 +21,32 @@ The service uses:
   - DB 0: URL mappings
   - DB 1: Rate limiting data
 
+``` mermaid
+graph TB
+    subgraph Docker Environment
+        subgraph "API Service :3000"
+            A[Go Fiber Server] --> B[URL Shortener Logic]
+            B --> C[Rate Limiter]
+        end
+        
+        subgraph "Redis DB :6379"
+            D[(DB 0<br>URL Mappings)] 
+            E[(DB 1<br>Rate Limits)]
+        end
+        
+        B --> |Store/Retrieve URLs| D
+        C --> |Check/Update Limits| E
+    end
+    
+    User -->|1. POST /api/v1<br>Long URL| A
+    User -->|2. GET /:shortcode| A
+    A -->|3. Redirect to<br>Original URL| User
+
+    style A fill:#9ff,stroke:#333
+    style D fill:#f96,stroke:#333
+    style E fill:#f96,stroke:#333
+```
+
 ## Quick Start
 
 ### Prerequisites
