@@ -4,7 +4,7 @@ import (
 	"os"
 	"time"
 	"strconv"
-	"github.com/Ubayed-Bin-Sufian/url-shortener-with-go/api/database"
+	"github.com/ubayed-bin-sufian/url-shortener-with-go/api/database"
 	"github.com/ubayed-bin-sufian/url-shortener-with-go/api/helpers"
 	"github.com/go-redis/redis/v8"
 	"github.com/gofiber/fiber/v2"

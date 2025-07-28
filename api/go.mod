@@ -3,7 +3,6 @@ module github.com/ubayed-bin-sufian/url-shortener-with-go/api
 go 1.24.4
 
 require (
-	github.com/Ubayed-Bin-Sufian/url-shortener-with-go/api v0.0.0-20250728071852-7fd102db9507
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/gofiber/fiber/v2 v2.52.9

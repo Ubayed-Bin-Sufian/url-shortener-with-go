@@ -4,7 +4,7 @@
 package routes
 
 import (
-	"github.com/Ubayed-Bin-Sufian/url-shortener-with-go/api/database"
+	"github.com/ubayed-bin-sufian/url-shortener-with-go/api/database"
 	"github.com/gofiber/fiber/v2"
 	"github.com/go-redis/redis/v8"
 )
