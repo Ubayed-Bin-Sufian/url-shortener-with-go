@@ -79,15 +79,15 @@ func ShortenURL(c *fiber.Ctx) error {
 	var id string
 
 	if body.CustomShort == "" {
-		id == uuid.New().string()[:6]
+		id = uuid.New().string()[:6]
 	} else {
-
+		id = body.CustomShort
 	}
 
-	r:= database.CreateClient(0)
+	r := database.CreateClient(0)
 	defer r.Close()
 
-	val, _ := r.Get(database.Ctx, id).Result()
+	val, _ = r.Get(database.Ctx, id).Result()
 	if val != "" {
 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
 			"error": "Custom short URL is already taken",
