@@ -1,9 +1,15 @@
 package routes
 
 import (
-	"time"
-	"github.com/ubayed-bin-sufian/shorten-url-fiber-redis/database"
 	"os"
+	"time"
+	"strconv"
+	"github.com/Ubayed-Bin-Sufian/url-shortener-with-go/api/database"
+	"github.com/ubayed-bin-sufian/url-shortener-with-go/api/helpers"
+	"github.com/go-redis/redis/v8"
+	"github.com/gofiber/fiber/v2"
+	"github.com/asaskevich/govalidator"
+	"github.com/google/uuid"
 )
 
 type request struct {
@@ -112,7 +118,7 @@ func ShortenURL(c *fiber.Ctx) error {
 	r2.Decr(database.Ctx, c.IP())
 
 	val, _ = r2.Get(database.Ctx, c.IP()).Result()
-	resp.RateRemaining, _ = strconv.Atoi(val)
+	resp.XRateRemaining, _ = strconv.Atoi(val)
 
 	// ttl value from DB
 	ttl, _ := r2.TTL(database.Ctx, c.IP()).Result()
