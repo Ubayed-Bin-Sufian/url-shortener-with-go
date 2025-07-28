@@ -66,5 +66,39 @@ func ShortenURL(c *fiber.Ctx) error {
 	// Enforce https, SSL
 	body.URL = helpers.EnforceSSL(body.URL)
 
+	// Check if the user has sent us a custom short URL
+	// Check if the custom short URL is already taken
+	// If not, create a new short URL with random ID using UUID
+	
+	var id string
+
+	if body.CustomShort == "" {
+		id == uuid.New().string()[:6]
+	} else {
+
+	}
+
+	r:= database.CreateClient(0)
+	defer r.Close()
+
+	val, _ := r.Get(database.Ctx, id).Result()
+	if val != "" {
+		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{
+			"error": "Custom short URL is already taken",
+		})
+	}
+
+	if body.Expiry == 0 {
+		body.Expiry = 24
+	}
+
+	err = r.Set(database.Ctx, id, body.URL, body.Expiry*3600*time.Second).Err()
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Unable to connect to the server",
+		})
+	}
+
 	r2.Decr(database.Ctx, c.IP())
 }
